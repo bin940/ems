@@ -1,0 +1,3 @@
+CREATE DATABASE auth_db;
+CREATE DATABASE energy_db;
+CREATE DATABASE analytics_db;

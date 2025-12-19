@@ -1,0 +1,93 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: ems-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./infra/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: ems-redis
+    ports:
+      - "6379:6379"
+
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+    container_name: ems-api-gateway
+    environment:
+      SERVER_PORT: ${API_GATEWAY_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+      AUTH_SERVICE_URL: http://auth-service:${AUTH_SERVICE_PORT}
+      ENERGY_SERVICE_URL: http://energy-service:${ENERGY_SERVICE_PORT}
+      ANALYTICS_SERVICE_URL: http://analytics-service:${ANALYTICS_SERVICE_PORT}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
+    depends_on:
+      - auth-service
+      - energy-service
+      - analytics-service
+
+  auth-service:
+    build:
+      context: ./services/auth-service
+    container_name: ems-auth-service
+    environment:
+      SERVER_PORT: ${AUTH_SERVICE_PORT}
+      DB_URL: ${AUTH_DB_URL}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - "${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}"
+    depends_on:
+      - postgres
+      - redis
+
+  energy-service:
+    build:
+      context: ./services/energy-service
+    container_name: ems-energy-service
+    environment:
+      SERVER_PORT: ${ENERGY_SERVICE_PORT}
+      DB_URL: ${ENERGY_DB_URL}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      AUTH_SERVICE_URL: http://auth-service:${AUTH_SERVICE_PORT}
+    ports:
+      - "${ENERGY_SERVICE_PORT}:${ENERGY_SERVICE_PORT}"
+    depends_on:
+      - postgres
+      - auth-service
+
+  analytics-service:
+    build:
+      context: ./services/analytics-service
+    container_name: ems-analytics-service
+    environment:
+      SERVER_PORT: ${ANALYTICS_SERVICE_PORT}
+      DB_URL: ${ANALYTICS_DB_URL}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      ENERGY_SERVICE_URL: http://energy-service:${ENERGY_SERVICE_PORT}
+    ports:
+      - "${ANALYTICS_SERVICE_PORT}:${ANALYTICS_SERVICE_PORT}"
+    depends_on:
+      - postgres
+      - energy-service
+
+volumes:
+  postgres_data:
