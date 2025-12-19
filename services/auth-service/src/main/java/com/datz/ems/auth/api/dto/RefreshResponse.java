@@ -1,4 +1,4 @@
-package com.datz.ems.auth.api;
+package com.datz.ems.auth.api.dto;
 
 public class RefreshResponse {
   private final String accessToken;

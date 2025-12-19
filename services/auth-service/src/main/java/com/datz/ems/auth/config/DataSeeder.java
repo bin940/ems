@@ -1,7 +1,7 @@
 package com.datz.ems.auth.config;
 
-import com.datz.ems.auth.domain.Company;
-import com.datz.ems.auth.domain.User;
+import com.datz.ems.auth.domain.entity.Company;
+import com.datz.ems.auth.domain.entity.User;
 import com.datz.ems.auth.infra.CompanyRepository;
 import com.datz.ems.auth.infra.UserRepository;
 import org.springframework.boot.CommandLineRunner;

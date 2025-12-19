@@ -1,4 +1,4 @@
-package com.datz.ems.energy.api;
+package com.datz.ems.energy.api.dto;
 
 import java.util.UUID;
 

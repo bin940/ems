@@ -1,4 +1,4 @@
-package com.datz.ems.analytics.domain;
+package com.datz.ems.analytics.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,9 +1,11 @@
-package com.datz.ems.energy.api;
+package com.datz.ems.energy.api.controller;
 
+import com.datz.ems.energy.api.dto.FacilityCreateRequest;
+import com.datz.ems.energy.api.dto.FacilityResponse;
 import com.datz.ems.energy.config.AuthContext;
-import com.datz.ems.energy.domain.EssStatus;
-import com.datz.ems.energy.domain.EnergyUsage;
-import com.datz.ems.energy.domain.Facility;
+import com.datz.ems.energy.domain.entity.EnergyUsage;
+import com.datz.ems.energy.domain.entity.EssStatus;
+import com.datz.ems.energy.domain.entity.Facility;
 import com.datz.ems.energy.infra.EssStatusRepository;
 import com.datz.ems.energy.infra.EnergyUsageRepository;
 import com.datz.ems.energy.infra.FacilityRepository;

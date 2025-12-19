@@ -1,7 +1,8 @@
 package com.datz.ems.auth.infra;
 
-import com.datz.ems.auth.domain.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.datz.ems.auth.domain.entity.Company;
 
 import java.util.UUID;
 

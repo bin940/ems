@@ -1,7 +1,8 @@
 package com.datz.ems.energy.infra;
 
-import com.datz.ems.energy.domain.EnergyUsage;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.datz.ems.energy.domain.entity.EnergyUsage;
 
 import java.util.List;
 import java.util.UUID;

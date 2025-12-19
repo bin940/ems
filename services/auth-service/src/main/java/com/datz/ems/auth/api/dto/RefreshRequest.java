@@ -1,4 +1,4 @@
-package com.datz.ems.auth.api;
+package com.datz.ems.auth.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
