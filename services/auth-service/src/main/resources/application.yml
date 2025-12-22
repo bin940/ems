@@ -14,6 +14,10 @@ spring:
         format_sql: true
   flyway:
     enabled: true
+
+auth:
+  bootstrap:
+    admin-secret: ${AUTH_BOOTSTRAP_ADMIN_SECRET:}
   data:
     redis:
       host: ${REDIS_HOST:localhost}
