@@ -26,7 +26,9 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
     if (path.startsWith("/auth/login")
         || path.startsWith("/auth/refresh")
         || path.startsWith("/auth/logout")
-        || path.startsWith("/actuator/health")) {
+        || path.startsWith("/actuator/health")
+        || path.startsWith("/v3/api-docs")
+        || path.startsWith("/swagger-ui")) {
       return chain.filter(exchange);
     }
 
